@@ -1,0 +1,114 @@
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T03:39:37.845Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T03:40:12.655Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T03:40:26.043Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T03:41:00.113Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T03:41:06.088Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T03:43:07.900Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T03:44:29.821Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T03:46:44.631Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T03:48:20.379Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T03:50:37.505Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T03:55:51.705Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T04:06:16.035Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T04:53:13.092Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T04:54:40.641Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T04:55:21.038Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T04:56:53.450Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T04:57:31.962Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T04:58:01.105Z'
+}
+{
+  level: 'info',
+  message: 'App running on port 4000',
+  service: 'contract-service',
+  timestamp: '2023-04-04T04:58:29.405Z'
+}
