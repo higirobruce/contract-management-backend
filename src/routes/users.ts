@@ -24,30 +24,35 @@ passport.serializeUser(function (user: any, cb) {
   });
 });
 
-passport.deserializeUser(function (user: any, cb:any) {
+passport.deserializeUser(function (user: any, cb: any) {
   process.nextTick(function () {
     return cb(null, user);
   });
 });
 
-
-
 userRouter.get("/", async (req, res) => {
-  try {
-    let users = await userModel
-      .find();
-    res.send({ users });
-  } catch (err) {
-    console.log(err);
-    res.send({ err });
+  let { organization } = req.headers;
+  if (!organization)
+    res
+      .status(404)
+      .send({ errorMessage: "No organization found in the header" });
+  else {
+    try {
+      let users = await userModel
+        .find({ organizations: organization })
+        .populate("organizations");
+      res.send({ users });
+    } catch (err) {
+      console.log(err);
+      res.send({ err });
+    }
   }
 });
 
 userRouter.get("/byId/:id", async (req, res) => {
   let { id } = req.params;
   try {
-    let user = await userModel
-      .findOne({ _id: id });
+    let user = await userModel.findOne({ _id: id }).populate("organizations");
     res.send({ user });
   } catch (err) {
     res.send({ err });
@@ -63,7 +68,8 @@ userRouter.get("/byCompany/", async (req, res) => {
   else {
     try {
       let user = await userModel
-        .find({ organizations: organization });
+        .find({ organizations: organization })
+        .populate("organizations");
       res.send({ user });
     } catch (err) {
       res.status(500).send({ err });
@@ -80,17 +86,18 @@ userRouter.post("/signup", async (req, res) => {
     profilePictureUrl,
     status,
     phoneNumber,
+    organizations,
   } = req.body;
   try {
     let c = new userModel({
-      
       firstName,
       lastName,
       email,
-      password: password?hashPassword(password):'',
+      password: password ? hashPassword(password) : "",
       profilePictureUrl,
       status,
       phoneNumber,
+      organizations,
     });
     let newuser = await c.save();
 
@@ -100,23 +107,22 @@ userRouter.post("/signup", async (req, res) => {
         surname: newuser.firstName,
       },
       "968d8b95-72cd-4470-b13e-1017138d32cf",
-      { expiresIn: '1h' }
+      { expiresIn: "1h" }
     );
 
     if (newuser) {
-
-      await send(
-        "from",
-        newuser.email,
-        "New account",
-        JSON.stringify({ user: newuser, token }),
-        "html",
-        "newUserAccount"
-      );
+      // await send(
+      //   "from",
+      //   newuser.email,
+      //   "New account",
+      //   JSON.stringify({ user: newuser, token }),
+      //   "html",
+      //   "newUserAccount"
+      // );
     }
     res.send({ newuser });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(400).send({ err });
   }
 });
@@ -124,22 +130,14 @@ userRouter.post("/signup", async (req, res) => {
 userRouter.put("/:id", async (req, res) => {
   let { id } = req.params;
   let updates = req.body;
-  let { organization } = req.headers;
-  if (!organization)
-    res
-      .status(404)
-      .send({ errorMessage: "No organization found in the header" });
-  else if (!id) res.status(404).send({ errorMessage: "No userId specified" });
-  else {
-    try {
-      let updatedUser = await userModel.findByIdAndUpdate(id, updates, {
-        new: true,
-      });
+  try {
+    let updatedUser = await userModel.findByIdAndUpdate(id, updates, {
+      new: true,
+    });
 
-      res.status(201).send({ updatedUser });
-    } catch (err) {
-      res.status(500).send({ error: err });
-    }
+    res.status(201).send({ updatedUser });
+  } catch (err) {
+    res.status(500).send({ error: err });
   }
 });
 
@@ -160,9 +158,8 @@ userRouter.put("/recoverPassword/:email", async (req, res) => {
             surname: updatedUser.firstName,
           },
           "968d8b95-72cd-4470-b13e-1017138d32cf",
-          { expiresIn: '1h' }
+          { expiresIn: "1h" }
         );
-
       }
 
       if (updatedUser) {
@@ -194,8 +191,8 @@ userRouter.put("/resetPassword/:id", async (req, res) => {
   else if (!token) res.status(404).send({ errorMessage: "No token provided" });
   else {
     try {
-      let validToken = jwt.verify(token,SALT);
-     
+      let validToken = jwt.verify(token, SALT);
+
       if (validToken) {
         let _newPassword = hashPassword(newPassword);
         let updatedUser = await userModel.findByIdAndUpdate(
@@ -241,22 +238,19 @@ userRouter.get("/login", async (req, res) => {
     let tenantId = req.query.tenantId;
     let { email, password } = req.query;
 
-    let user = await userModel
-      .findOne({ email: email });
+    let user = await userModel.findOne({ email: email });
 
     let valid = validPassword(password, user?.password);
 
     if (valid) {
       let otp = generateOTP();
 
-      let userWithOtp = await userModel.findByIdAndUpdate(
-        user?._id,
-        { $set: { otp } },
-        { new: true }
-      );
+      let userWithOtp = await userModel
+        .findByIdAndUpdate(user?._id, { $set: { otp } }, { new: true })
+        .populate("organizations");
 
       // await send('from',userWithOtp?.email,'Your DApproval OTP',JSON.stringify(userWithOtp),'html','otp')
-      
+
       res.send(userWithOtp);
     } else
       res.status(401).send({ error: true, message: "Invalid credentials" });
@@ -283,8 +277,7 @@ userRouter.get("/verify-otp", async (req, res) => {
   try {
     let { id, otp } = req.query;
 
-    let user = await userModel
-      .findById({ _id: id });
+    let user = await userModel.findById({ _id: id });
 
     let valid = user?.otp === otp;
     if (valid) {

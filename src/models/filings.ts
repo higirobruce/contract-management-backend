@@ -82,6 +82,10 @@ export const MFiling = new Schema<Filing>({
       type: commentSchema,
     },
   ],
+  organization:{
+    type: mongoose.Types.ObjectId,
+    ref: 'Company'
+  }
 });
 
 export const FilingModel = model<Filing>("Filing", MFiling);

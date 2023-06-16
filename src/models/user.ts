@@ -36,7 +36,7 @@ export const userSchema = new mongoose.Schema(
       type: [
         {
           type: mongoose.Types.ObjectId,
-          ref: "tenants",
+          ref: "Company",
           required: true,
         },
       ],

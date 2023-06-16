@@ -8,6 +8,7 @@ import agreementTypesRouter from "./routes/agreementTypes";
 import criticalClausesRouter from "./routes/criticalClauses";
 import executionStatusesRouter from "./routes/executionStatuses";
 import expiryActionsRouter from "./routes/expiryActions";
+import companiesRouter from './routes/companies'
 import partyTypesRouter from "./routes/partyTypes";
 import {uploadRouter} from './routes/upload'
 
@@ -74,6 +75,7 @@ app.use("/expiryActions", expiryActionsRouter);
 app.use("/partyTypes", partyTypesRouter);
 app.use("/uploads", uploadRouter);
 app.use("/users", usersRouter);
+app.use('/companies', companiesRouter)
 
 app.get("/file/:folder/:name", function (req, res, next) {
   var folder = req.params.folder;

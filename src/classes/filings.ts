@@ -16,6 +16,7 @@ export default class Filing {
   owner: String;
   collaborators: [];
   collaboratorComments:[];
+  organization: String;
 
   constructor(
     name: String,
@@ -34,7 +35,8 @@ export default class Filing {
     docId: string,
     owner: String,
     collaborators: [],
-    collaboratorComments: []
+    collaboratorComments: [],
+    organization: String
   ) {
     (this.name = name), (this.description = description);
     this.number = number;
@@ -52,5 +54,6 @@ export default class Filing {
     this.owner = owner;
     this.collaborators = collaborators
     this.collaboratorComments = collaboratorComments
+    this.organization = organization
   }
 }

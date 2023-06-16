@@ -3,10 +3,10 @@ import Filing from "../classes/filings";
 import { FilingModel, MFiling } from "../models/filings";
 import { send } from "../utils/sendEmailNode";
 
-export async function getAllFillings() {
+export async function getAllFillings(organization: string) {
   try {
-    let data = await FilingModel.find()
-      .populate("agreementType")
+    let data = await FilingModel.find({organization})
+      .populate("agreementType organization")
       .populate("partyType")
       .populate("statusOfExecution")
       .populate("actionOnExpiry")
@@ -19,12 +19,12 @@ export async function getAllFillings() {
     return err;
   }
 }
-export async function getAllMyFillings(id: String) {
+export async function getAllMyFillings(organization: String, id: string) {
   try {
-    let data = await FilingModel.find({
+    let data = await FilingModel.find({organization,
       $or: [{ collaborators: { $elemMatch: { $eq: id } } }, { owner: id }],
     })
-      .populate("agreementType")
+    .populate("agreementType organization")
       .populate("partyType")
       .populate("statusOfExecution")
       .populate("actionOnExpiry")
@@ -41,7 +41,7 @@ export async function getAllMyFillings(id: String) {
 export async function getFillingById(id: String) {
   try {
     let data = await FilingModel.findById(id)
-      .populate("agreementType")
+    .populate("agreementType organization")
       .populate("partyType")
       .populate("statusOfExecution")
       .populate("actionOnExpiry")
@@ -83,7 +83,7 @@ export async function createFiling(filing: Filing) {
 export async function updateFiling(id: String, update: Filing) {
   try {
     let data = await FilingModel.findByIdAndUpdate(id, update, { new: true })
-      .populate("agreementType")
+    .populate("agreementType organization")
       .populate("partyType")
       .populate("statusOfExecution")
       .populate("actionOnExpiry")

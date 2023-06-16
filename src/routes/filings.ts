@@ -13,13 +13,18 @@ import { send } from "../utils/sendEmailNode";
 let router = Router();
 
 router.get("/", async (req, res) => {
-  let allFilings = await getAllFillings();
-  res.status(200).send(allFilings);
+  let { organization } = req.headers;
+  if (organization) {
+    let allFilings = await getAllFillings(organization as string);
+    res.status(200).send(allFilings);
+  } else {
+  }
 });
 
 router.get("/my-filings/:id", async (req, res) => {
   let { id } = req.params;
-  let allFilings = await getAllMyFillings(id);
+  let { organization } = req.headers;
+  let allFilings = await getAllMyFillings(organization as string, id);
   res.status(200).send(allFilings);
 });
 
@@ -51,6 +56,7 @@ router.post("/", async (req, res) => {
       owner,
       collaborators,
       collaboratorComments,
+      organization,
     } = req.body;
 
     let newFilingNumber = await generateFileNumber();
@@ -73,6 +79,7 @@ router.post("/", async (req, res) => {
       owner,
       collaborators,
       collaboratorComments,
+      organization,
     });
 
     res.status(201).send(newFiling);
@@ -103,7 +110,10 @@ router.put("/:id", async (req, res) => {
         "Updates - comments on a File",
         JSON.stringify({
           comment: newComment,
-          file: { url: encodeURI((await populatedFiling).docId), id: (await populatedFiling)._id  },
+          file: {
+            url: encodeURI((await populatedFiling).docId),
+            id: (await populatedFiling)._id,
+          },
         }),
         "html",
         "comment"
