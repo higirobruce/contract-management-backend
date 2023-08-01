@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 
 export const phoneNumberSchema = new mongoose.Schema({
-  countryCode: String,
+  countryCode: {
+    type: String,
+    default: '+250'
+  },
   phone: String,
 });
 
