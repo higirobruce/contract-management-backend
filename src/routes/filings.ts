@@ -13,18 +13,18 @@ import { send } from "../utils/sendEmailNode";
 let router = Router();
 
 router.get("/", async (req, res) => {
-  let { organization } = req.headers;
+  let { organization, viewall } = req.headers;
   if (organization) {
-    let allFilings = await getAllFillings(organization as string);
+    let allFilings = await getAllFillings(organization as string, viewall);
     res.status(200).send(allFilings);
   } else {
   }
 });
 
 router.get("/download", async (req, res) => {
-  let { organization } = req.headers;
+  let { organization, viewall } = req.headers;
   if (organization) {
-    let allFilings = await getAllFillings(organization as string);
+    let allFilings = await getAllFillings(organization as string, viewall);
     res.status(200).send(allFilings);
   } else {
   }
