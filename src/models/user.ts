@@ -5,6 +5,18 @@ export const phoneNumberSchema = new mongoose.Schema({
   phone: String,
 });
 
+export const permissionsSchema = new mongoose.Schema({
+  canViewFiles: { type: Boolean, default: false },
+  canCreateFiles: { type: Boolean, default: false },
+  canEditFiles: { type: Boolean, default: false },
+  canCreateUsers: { type: Boolean, default: false },
+  canEditUsers: { type: Boolean, default: false },
+  canViewUsers: { type: Boolean, default: false },
+  canCreateMasterData: { type: Boolean, default: false },
+  canEditMasterData: { type: Boolean, default: false },
+  canViewMasterData: { type: Boolean, default: false },
+});
+
 export const userSchema = new mongoose.Schema(
   {
     lastName: {
@@ -14,6 +26,7 @@ export const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    permissions: permissionsSchema,
     email: {
       type: String,
       required: true,
@@ -27,7 +40,10 @@ export const userSchema = new mongoose.Schema(
 
     profilePictureUrl: String,
 
-    status: String,
+    status: {
+      type: String,
+      defaul: 'active'
+    },
 
     phoneNumber: {
       type: phoneNumberSchema,
@@ -41,7 +57,6 @@ export const userSchema = new mongoose.Schema(
         },
       ],
     },
-    
   },
   { timestamps: true, strict: true }
 );

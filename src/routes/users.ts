@@ -87,6 +87,7 @@ userRouter.post("/signup", async (req, res) => {
     status,
     phoneNumber,
     organizations,
+    permissions,
   } = req.body;
   try {
     let c = new userModel({
@@ -98,6 +99,7 @@ userRouter.post("/signup", async (req, res) => {
       status,
       phoneNumber,
       organizations,
+      permissions,
     });
     let newuser = await c.save();
 
@@ -130,6 +132,8 @@ userRouter.post("/signup", async (req, res) => {
 userRouter.put("/:id", async (req, res) => {
   let { id } = req.params;
   let updates = req.body;
+
+  console.log(updates)
   try {
     let updatedUser = await userModel.findByIdAndUpdate(id, updates, {
       new: true,

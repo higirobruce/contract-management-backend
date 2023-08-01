@@ -21,6 +21,15 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/download", async (req, res) => {
+  let { organization } = req.headers;
+  if (organization) {
+    let allFilings = await getAllFillings(organization as string);
+    res.status(200).send(allFilings);
+  } else {
+  }
+});
+
 router.get("/my-filings/:id", async (req, res) => {
   let { id } = req.params;
   let { organization } = req.headers;
