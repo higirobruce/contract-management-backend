@@ -3,14 +3,12 @@ const mjml = require("mjml");
 
 // create transporter object with smtp server details
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: 465,
-  secure: true,
+  host: "smtp.office365.com",
+  port: 587,
   auth: {
-    user: process.env.IRMB_SENDER_EMAIL,
-    pass: process.env.IRMB_SENDER_PASSWORD,
+    user: process.env.CVL_GROUP_COUNSEL_SENDER_EMAIL,
+    pass: process.env.CVL_GROUP_COUNSEL_SENDER_PASSWORD,
   },
-  from: process.env.IRMB_SENDER_EMAIL,
 });
 
 const newUserAccount = (emailObj: any) => {
@@ -136,7 +134,9 @@ const comment = (emailObj: any) => {
 
         <mj-text color="#525252">
           Hi there, <br />
-          ${emailObj.comment.collaborator.firstName} has commented on a file you collaborate on.<br /><br />
+          ${
+            emailObj.comment.collaborator.firstName
+          } has commented on a file you collaborate on.<br /><br />
           Here is the comment: 
           <b><code>${emailObj.comment.comment}</code></b> <br/><br/>
           
@@ -162,7 +162,6 @@ const comment = (emailObj: any) => {
   </mj-body>
 </mjml>`;
 };
-
 
 const passwordRecover = (emailObj: any) => {
   return `<mjml>
@@ -275,8 +274,7 @@ export async function send(
         text,
         html: mjml(newFile(JSON.parse(text))).html,
       });
-
-      else if (type === "comment")
+    else if (type === "comment")
       return await transporter.sendMail({
         from: process.env.IRMB_SENDER_EMAIL,
         to,
