@@ -99,7 +99,7 @@ app.get("/file/:folder/:name", function (req, res, next) {
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`);
  
-  cron.schedule("21 15 * * *", () => {
+  cron.schedule("32 12 * * *", () => {
     console.log(
     'sending...'
     )

@@ -260,7 +260,7 @@ export async function send(
   try {
     if (type === "newUserAccount")
       return await transporter.sendMail({
-        from: process.env.IRMB_SENDER_EMAIL,
+        from: process.env.CVL_GROUP_COUNSEL_SENDER_EMAIL,
         to,
         subject,
         text,
@@ -268,7 +268,7 @@ export async function send(
       });
     else if (type === "newFile")
       return await transporter.sendMail({
-        from: process.env.IRMB_SENDER_EMAIL,
+        from: process.env.CVL_GROUP_COUNSEL_SENDER_EMAIL,
         to,
         subject,
         text,
@@ -276,7 +276,7 @@ export async function send(
       });
     else if (type === "comment")
       return await transporter.sendMail({
-        from: process.env.IRMB_SENDER_EMAIL,
+        from: process.env.CVL_GROUP_COUNSEL_SENDER_EMAIL,
         to,
         subject,
         text,
@@ -284,7 +284,7 @@ export async function send(
       });
     else if (type === "passwordRecover")
       return await transporter.sendMail({
-        from: process.env.IRMB_SENDER_EMAIL,
+        from: process.env.CVL_GROUP_COUNSEL_SENDER_EMAIL,
         to,
         subject,
         text,
@@ -292,7 +292,7 @@ export async function send(
       });
     else if (type === "otp") {
       return await transporter.sendMail({
-        from: process.env.IRMB_SENDER_EMAIL,
+        from: process.env.CVL_GROUP_COUNSEL_SENDER_EMAIL,
         to,
         subject,
         text,
@@ -301,7 +301,7 @@ export async function send(
     } else if (type == "expiration") {
       console.log(html);
       return await transporter.sendMail({
-        from: process.env.IRMB_SENDER_EMAIL,
+        from: process.env.CVL_GROUP_COUNSEL_SENDER_EMAIL,
         to,
         subject,
         text,
