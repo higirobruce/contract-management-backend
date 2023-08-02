@@ -31,7 +31,10 @@ passport.deserializeUser(function (user: any, cb: any) {
 });
 
 userRouter.get("/", async (req, res) => {
-  let { organization } = req.headers;
+  let { organization, viewall } = req.headers;
+  let query = {};
+
+  if (viewall !== "true") query = { organizations: organization };
   if (!organization)
     res
       .status(404)
@@ -39,7 +42,7 @@ userRouter.get("/", async (req, res) => {
   else {
     try {
       let users = await userModel
-        .find({ organizations: organization })
+        .find(query)
         .populate("organizations");
       res.send({ users });
     } catch (err) {
@@ -133,7 +136,7 @@ userRouter.put("/:id", async (req, res) => {
   let { id } = req.params;
   let updates = req.body;
 
-  console.log(updates)
+  console.log(updates);
   try {
     let updatedUser = await userModel.findByIdAndUpdate(id, updates, {
       new: true,
