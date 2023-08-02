@@ -100,9 +100,7 @@ app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`);
  
   cron.schedule("32 12 * * *", () => {
-    console.log(
-    'sending...'
-    )
+    
 
     getFilesToExpireinOneWeek().then(res=>{
 

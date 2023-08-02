@@ -279,7 +279,7 @@ export async function getFilesToExpireinOneMonth() {
     });
 
     emailBodies.forEach(async (f, index) => {
-      console.log("sending");
+      
       await send(
         "appinfo@construck.rw",
         "higirobru@gmail.com", //TO CHANGE
